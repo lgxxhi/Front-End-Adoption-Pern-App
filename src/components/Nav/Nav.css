@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
+
+.logo {
+  font-family: "Satisfy", cursive;
+  font-weight: 700;
+  font-size: x-large;
+  color: #6503b5;
+}
+
+.my-btn {
+  border: 2px solid #6503b5;
+  color: #6503b5;
+  border-radius: 5px;
+  text-align: center;
+  padding: 5px 20px;
+  text-decoration: none;
+}
+
+.my-btn:hover {
+  background-color: #6503b54b;
+}
+
+.bi {
+  color: #6503b5;
+}
