@@ -11,7 +11,6 @@ function Pets() {
   async function getPetData() {
     try {
       let result = await axios.get(`${url}/pets`);
-
       setPetData(result.data);
     } catch (error) {
       console.log(error);
@@ -22,18 +21,42 @@ function Pets() {
     getPetData();
   }, []);
 
+  const toggleFavorite = async (petId) => {
+    try {
+      const updatedPetData = petData.map((pet) => {
+        if (pet.id === petId) {
+          return { ...pet, is_favorite: !pet.is_favorite };
+        }
+        return pet;
+      });
+
+      setPetData(updatedPetData);
+
+      await axios.put(`${url}/pets/${petId}`, {
+        ...petData.find((pet) => pet.id === petId),
+        is_favorite: !petData.find((pet) => pet.id === petId).is_favorite,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   function mapData() {
     return petData.map((pet) => (
       <div key={pet.id} className="pet-card">
+        <div className="favorite" onClick={() => toggleFavorite(pet.id)}>
+          {pet.is_favorite ? (
+            <i className="fas fa-heart"></i>
+          ) : (
+            <i className="far fa-heart"></i>
+          )}
+        </div>
         <img src={pet.photo} alt={pet.name} />
         <div className="pet-info">
           <h3>{pet.name}</h3>
           <p>Age: {pet.age}</p>
           <p>Breed: {pet.breed || "N/A"}</p>
           <p>Location: {pet.location || "N/A"}</p>
-          <div className="favorite">
-            {pet.is_favorite && <i className="fas fa-heart"></i>}
-          </div>
           <div className="actions">
             <Link to={`/pets/${pet.id}`}>View Details</Link>{" "}
           </div>
