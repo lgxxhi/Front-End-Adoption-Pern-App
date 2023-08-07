@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +6,7 @@ function AddPet() {
   const [petData, setPetData] = useState({
     name: "",
     age: 0,
+    species: "",
     breed: "",
     gender: "m",
     location: "",
@@ -16,14 +17,17 @@ function AddPet() {
     photo: "",
   });
 
+  const [otherSpecies, setOtherSpecies] = useState("");
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    // Handle radio buttons separately
-    if (type === "radio") {
+    if (type === "radio" || name === "species") {
       setPetData({ ...petData, [name]: value });
+    } else if (name === "otherSpecies") {
+      setOtherSpecies(value);
     } else {
       setPetData({ ...petData, [name]: type === "checkbox" ? checked : value });
     }
@@ -33,7 +37,11 @@ function AddPet() {
     e.preventDefault();
     try {
       const url = process.env.REACT_APP_API_URL;
-      await axios.post(`${url}/pets`, petData);
+
+      const speciesValue =
+        petData.species === "other" ? otherSpecies : petData.species;
+
+      await axios.post(`${url}/pets`, { ...petData, species: speciesValue });
       alert("New pet added!");
       navigate("/pets");
     } catch (error) {
@@ -67,6 +75,28 @@ function AddPet() {
             onChange={handleChange}
             required
           />
+        </label>
+        <br />
+        <label>
+          Species:
+          <select
+            name="species"
+            value={petData.species}
+            onChange={handleChange}
+          >
+            <option value="cat">Cat</option>
+            <option value="dog">Dog</option>
+            <option value="other">Other</option>
+          </select>
+          {petData.species === "other" && (
+            <input
+              type="text"
+              name="otherSpecies"
+              value={otherSpecies}
+              onChange={handleChange}
+              placeholder="Enter other species"
+            />
+          )}
         </label>
         <br />
         <label>
