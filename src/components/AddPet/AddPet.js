@@ -6,9 +6,9 @@ function AddPet() {
   const [petData, setPetData] = useState({
     name: "",
     age: 0,
-    species: "",
+    species: "cat",
     breed: "",
-    gender: "m",
+    gender: "",
     location: "",
     color: "",
     size: "",
@@ -46,6 +46,13 @@ function AddPet() {
       navigate("/pets");
     } catch (error) {
       console.log(error);
+      console.log(error.response.data.error);
+      if (
+        error.response.data.error ===
+        "You forgot to start your photo url with http:// or https://"
+      ) {
+        alert("Please enter a valid photo url");
+      }
     }
   };
 
@@ -95,6 +102,7 @@ function AddPet() {
               value={otherSpecies}
               onChange={handleChange}
               placeholder="Enter other species"
+              required
             />
           )}
         </label>
@@ -118,6 +126,7 @@ function AddPet() {
             value="m"
             checked={petData.gender === "m"}
             onChange={handleChange}
+            required
           />
           M
         </label>{" "}
@@ -128,6 +137,7 @@ function AddPet() {
             value="f"
             checked={petData.gender === "f"}
             onChange={handleChange}
+            required
           />
           F
         </label>
@@ -140,6 +150,7 @@ function AddPet() {
             name="location"
             value={petData.location}
             onChange={handleChange}
+            required
           />
         </label>
         <br />
@@ -150,6 +161,7 @@ function AddPet() {
             name="color"
             value={petData.color}
             onChange={handleChange}
+            required
           />
         </label>
         <br />
@@ -160,6 +172,7 @@ function AddPet() {
             name="size"
             value={petData.size}
             onChange={handleChange}
+            required
           />
         </label>
         <br />
@@ -169,6 +182,7 @@ function AddPet() {
             name="story"
             value={petData.story}
             onChange={handleChange}
+            required
           />
         </label>
         <br />
@@ -190,6 +204,7 @@ function AddPet() {
             name="photo"
             value={petData.photo}
             onChange={handleChange}
+            required
           />
         </label>
         <button type="submit">Add Pet</button>
