@@ -46,6 +46,8 @@ function Pet() {
     }
   }
 
+  function modal() {}
+
   const deletePet = async () => {
     try {
       const response = await axios.delete(`${url}/pets/${id}`);
@@ -109,7 +111,7 @@ function Pet() {
         </div>
       </div>
       <div className="d-flex page-footer  btns px-3">
-        <Link to="/" className="pt-1">
+        <Link to="/pets" className="pt-1">
           <button className="btn btn-light">Back</button>
         </Link>
         <Link to={`/pets/${id}/edit`} className="pt-1 mx-2 ">
@@ -117,17 +119,61 @@ function Pet() {
         </Link>
         <Link className="pt-1">
           <button
-            className="btn btn-light"
-            data-toggle="confirmation"
-            onClick={() => deletePet()}
+            type="button"
+            className="btn btn-light  "
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
           >
             Delete
           </button>
         </Link>
+        <div
+          className="modal fade"
+          id="staticBackdrop"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabIndex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                  Are You Sure You Wish To Delete?
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  data-bs-dismiss="modal"
+                >
+                  NO
+                </button>
+                <button
+                  onClick={() => deletePet()}
+                  type="button"
+                  className="btn btn-outline-danger"
+                  data-bs-dismiss="modal"
+                >
+                  YES
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <input type="checkbox" id="heart" className="heart-input" />
         <label htmlFor="heart" className="heart-label ms-auto">
-          ♥
+          <i className="fas fa-heart"></i>
         </label>
       </div>
     </div>
