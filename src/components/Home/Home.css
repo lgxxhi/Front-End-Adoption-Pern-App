@@ -1,0 +1,14 @@
+svg {
+  color: palegoldenrod;
+}
+
+.round {
+  border: 2px solid #7633f9;
+  border-radius: 20%;
+  background-color: white;
+  padding: 50px;
+}
+
+.round:hover {
+  background-color: #7633f94b;
+}
