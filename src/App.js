@@ -2,7 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav/Nav";
 import Home from "./components/Home/Home";
 import Pets from "./components/Pets/Pets";
-import petData from "./data/PetData";
+import Pet from "./components/Pet/Pet";
+import EditPet from "./components/EditPet/EditPet";
+
 function App() {
   return (
     <div className="App">
@@ -11,6 +13,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/pets" element={<Pets />} />
+          <Route path="/pets/:id" element={<Pet />} />
+          <Route path="/pets/:id/edit" element={<EditPet />} />
           <Route path="/404" element={<h1>404 Not found!</h1>} />
         </Routes>
       </Router>

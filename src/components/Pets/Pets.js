@@ -1,9 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 
-export class Pets extends Component {
-  render() {
-    return <div>Pets</div>;
-  }
+function Pets() {
+  return <div>Pets</div>;
 }
 
 export default Pets;

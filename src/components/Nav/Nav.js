@@ -8,7 +8,7 @@ function Nav() {
     <div>
       <nav className="navbar bg-body-tertiary my-3 ">
         <div className="container-fluid">
-          <Link to={"/"} className="navbar-brand logo" href="#">
+          <Link to={"/"} className="navbar-brand logo ">
             PetMatch.com
           </Link>
           <button
