@@ -53,11 +53,7 @@ function Nav() {
                 <Link to={"/cats"} type="button" className="my-btn  my-2">
                   Cats
                 </Link>
-                <Link
-                  to={"/put-pet-for-adoption"}
-                  type="button"
-                  className="my-btn  my-2"
-                >
+                <Link to={"/add-pet"} type="button" className="my-btn  my-2">
                   Put Pet For Adoption
                 </Link>
                 <Link to={"/cart"} className="mt-4" type="button">
