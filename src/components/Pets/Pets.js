@@ -23,6 +23,7 @@ function Pets() {
 
   useEffect(() => {
     getPetData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   const toggleFavorite = async (petId) => {
