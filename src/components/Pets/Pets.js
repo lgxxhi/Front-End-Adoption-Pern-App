@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import "./Pets.css";
 
 function Pets() {
   let url = process.env.REACT_APP_API_URL;
-
+  const { filter } = useParams();
   const [petData, setPetData] = useState([]);
 
   async function getPetData() {
     try {
       let result = await axios.get(`${url}/pets`);
-      setPetData(result.data);
+      if (filter === "dogs" || filter === "cats") {
+        setPetData(
+          result.data.filter((pet) => pet.species === filter.slice(0, -1))
+        );
+      } else setPetData(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -19,7 +23,7 @@ function Pets() {
 
   useEffect(() => {
     getPetData();
-  }, []);
+  }, [filter]);
 
   const toggleFavorite = async (petId) => {
     try {
