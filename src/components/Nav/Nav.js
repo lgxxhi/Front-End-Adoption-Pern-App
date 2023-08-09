@@ -47,10 +47,18 @@ function Nav() {
                 <Link to={"/about-us"} type="button" className="my-btn  my-2">
                   About Us
                 </Link>
-                <Link to={"/dogs"} type="button" className="my-btn  my-2">
+                <Link
+                  to={"/pets/filter/dogs"}
+                  type="button"
+                  className="my-btn  my-2"
+                >
                   Dogs
                 </Link>
-                <Link to={"/cats"} type="button" className="my-btn  my-2">
+                <Link
+                  to={"/pets/filter/cats"}
+                  type="button"
+                  className="my-btn  my-2"
+                >
                   Cats
                 </Link>
                 <Link to={"/add-pet"} type="button" className="my-btn  my-2">
