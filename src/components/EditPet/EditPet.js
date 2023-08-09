@@ -22,6 +22,8 @@ function EditPet() {
     story: "",
   });
 
+  const [otherSpecies, setOtherSpecies] = useState("");
+
   useEffect(() => {
     const fetchPet = async () => {
       try {
@@ -36,168 +38,217 @@ function EditPet() {
     fetchPet();
   }, []);
 
-  const handleTextChange = (e) => {
-    setPet({
-      ...pet,
-      [e.target.id]: e.target.value,
-    });
-  };
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
 
-  const handleCheckboxChange = (e) => {
-    setPet({
-      ...pet,
-      is_favorite: !pet.is_favorite,
-    });
-  };
-
-  async function updatePet(id, updatedPet) {
-    try {
-      let result = await axios.put(`/pets/${id}`, updatedPet);
-
-      return result;
-    } catch (e) {
-      return e;
+    if (type === "radio" || name === "species") {
+      setPet({ ...pet, [name]: value });
+    } else if (name === "otherSpecies") {
+      setOtherSpecies(value);
+    } else {
+      setPet({
+        ...pet,
+        [name]: type === "checkbox" ? checked : value,
+      });
     }
-  }
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await updatePet(id);
+      const speciesValue = pet.species === "other" ? otherSpecies : pet.species;
+
+      await axios.put(`${url}/pets/${id}`, { ...pet, species: speciesValue });
       navigate(`/pets/${id}`);
     } catch (e) {
       console.log(e);
     }
   }
 
-  function getGender(gender) {
-    if (gender === "m") {
-      return "Male";
-    } else if (gender === "f") {
-      return "Female";
-    } else {
-      return "Unknown";
-    }
-  }
-
   return (
-    <div>
+    <div className="edit-pet container row-sm-1">
+      <div>
+        <h2>Edit Pet Info:</h2>
+      </div>
+      <br />
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="row g-2">
           <label className="edit-label">Name:</label>
-          <input
-            className="edit-input"
-            required
-            type="text"
-            name="name"
-            id="name"
-            onChange={handleTextChange}
-            value={pet.name}
-          />
+          <div className="col-md-12">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Name..."
+              name="name"
+              id="name"
+              required
+              onChange={handleChange}
+              value={pet.name}
+            />
+          </div>
+          <div className="col">
+            <label className="edit-label">Age:</label>
+            <input
+              required
+              type="number"
+              className="form-control"
+              placeholder="Age..."
+              name="age"
+              id="age"
+              onChange={handleChange}
+              value={pet.age}
+            />
+          </div>
+          <div className="col-md-6">
+            <label>Species:</label>
+            <select
+              className="form-select"
+              name="species"
+              id="species"
+              value={pet.species}
+              onChange={handleChange}
+            >
+              <option value=""></option>
+              <option value="cat">Cat</option>
+              <option value="dog">Dog</option>
+              <option value="other">Other</option>
+            </select>
+            {pet.species === "other" && (
+              <input
+                type="text"
+                name="otherSpecies"
+                id="otherSpecies"
+                className="form-control"
+                value={otherSpecies}
+                onChange={handleChange}
+                placeholder="Enter other species"
+                required
+              />
+            )}
+          </div>
+          <div className="col-md-6">
+            <label className="edit-label col-md-6">Breed:</label>
+            <input
+              required
+              type="text"
+              className="form-control"
+              placeholder="Breed..."
+              name="breed"
+              id="breed"
+              onChange={handleChange}
+              value={pet.breed}
+            />
+          </div>
+          <div className="form-inline col-md-6">
+            <label>Gender:</label>
+            <br />
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="gender"
+                value="m"
+                checked={pet.gender === "m"}
+                onChange={handleChange}
+                required
+              />
+              <label className="form-check-label" htmlFor="inlineRadio1">
+                M
+              </label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="gender"
+                value="f"
+                checked={pet.gender === "f"}
+                onChange={handleChange}
+                required
+              />
+              <label className="form-check-label" htmlFor="inlineRadio2">
+                F
+              </label>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <label className="edit-label">Location:</label>
+
+            <input
+              required
+              type="text"
+              className="form-control"
+              placeholder="Location..."
+              name="location"
+              id="location"
+              onChange={handleChange}
+              value={pet.location}
+            />
+          </div>
+          <div className="col-md-4">
+            <label className="edit-label">Color:</label>
+
+            <input
+              required
+              type="text"
+              className="form-control"
+              placeholder="Color..."
+              name="color"
+              id="color"
+              onChange={handleChange}
+              value={pet.color}
+            />
+          </div>
+          <div className="col-md-4">
+            <label className="edit-label">Size:</label>
+
+            <input
+              required
+              type="text"
+              className="form-control"
+              placeholder="Size..."
+              name="size"
+              id="size"
+              onChange={handleChange}
+              value={pet.size}
+            />
+          </div>
+          <div className="col-md-10">
+            <label className="edit-label">Story:</label>
+            <textarea
+              type="text"
+              required
+              className="form-control"
+              placeholder="Write something about this pet..."
+              value={pet.story}
+              name="story"
+              id="story"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col-md-2">
+            <div className="form-check">
+              <br />
+
+              <input
+                className="form-check-input "
+                type="checkbox"
+                name="is_favorite"
+                id="is_favorite"
+                onChange={handleChange}
+                checked={pet.is_favorite}
+              />
+              <label className="form-check-label" htmlFor="gridCheck">
+                Favorite?
+              </label>
+            </div>
+          </div>
+          <div className="col-12">
+            <button type="submit" className="btn btn-outline-dark">
+              Submit
+            </button>
+          </div>
         </div>
-        <div>
-          <label className="edit-label">Age:</label>
-          <input
-            className="edit-input"
-            required
-            type="number"
-            name="age"
-            id="age"
-            onChange={handleTextChange}
-            value={pet.age}
-          />
-        </div>
-        <div>
-          <label className="edit-label">Species:</label>
-          <br />
-          <select value={pet.species}>
-            <option value=""></option>
-            <option value="dog">Dog</option>
-            <option value="cat">Cat</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <div>
-          <label className="edit-label">Breed:</label>
-          <input
-            className="edit-input"
-            required
-            type="text"
-            name="breed"
-            id="breed"
-            onChange={handleTextChange}
-            value={pet.breed}
-          />
-        </div>
-        <div>
-          <label className="edit-label">Gender:</label>
-          <br />
-          <select value={getGender(pet.gender)}>
-            <option value=""></option>
-            <option value="male">Male</option>
-            <option value="Cat">Female</option>
-          </select>
-        </div>
-        <div>
-          <label className="edit-label">Location:</label>
-          <input
-            className="edit-input"
-            required
-            type="text"
-            name="location"
-            id="location"
-            onChange={handleTextChange}
-            value={pet.location}
-          />
-        </div>
-        <div>
-          <label className="edit-label">Color:</label>
-          <input
-            className="edit-input"
-            required
-            type="text"
-            name="color"
-            id="color"
-            onChange={handleTextChange}
-            value={pet.color}
-          />
-        </div>
-        <div>
-          <label className="edit-label">Size:</label>
-          <input
-            className="edit-input"
-            required
-            type="text"
-            name="size"
-            id="size"
-            onChange={handleTextChange}
-            value={pet.size}
-          />
-        </div>
-        <div>
-          <label className="edit-label">Story:</label>
-          <textarea
-            className="edit-input"
-            required
-            type="text"
-            name="breed"
-            id="breed"
-            onChange={handleTextChange}
-            value={pet.story}
-          />
-        </div>
-        <div>
-          <label className="edit-label">Favorite</label>
-          <input
-            className="edit-input"
-            type="checkbox"
-            name="is_favorite"
-            id="is_favorite"
-            onChange={handleCheckboxChange}
-            checked={pet.is_favorite}
-          />
-        </div>
-        <button>Submit</button>
       </form>
     </div>
   );

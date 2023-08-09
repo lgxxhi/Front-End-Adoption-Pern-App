@@ -3,7 +3,6 @@ import Nav from "./components/Nav/Nav";
 import Home from "./components/Home/Home";
 import Pets from "./components/Pets/Pets";
 import AddPet from "./components/AddPet/AddPet";
-import petData from "./data/PetData";
 import Pet from "./components/Pet/Pet";
 import EditPet from "./components/EditPet/EditPet";
 

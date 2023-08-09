@@ -46,7 +46,15 @@ function Pet() {
     }
   }
 
-  function modal() {}
+  function getSpecies(species) {
+    if (species === "dog") {
+      return "Dog";
+    } else if (species === "cat") {
+      return "Cat";
+    } else {
+      return species;
+    }
+  }
 
   const deletePet = async () => {
     try {
@@ -89,6 +97,9 @@ function Pet() {
             <ul className="list-inline">
               <li className="list-inline-item">{petState.breed}</li>
               <li className="list-inline-item">&bull; {petState.location}</li>
+              <li className="list-inline-item">
+                &bull; {getSpecies(petState.species)}
+              </li>
             </ul>
 
             <hr />
@@ -105,7 +116,7 @@ function Pet() {
             <h5>Info:</h5>
             <p>{petState.story}</p>
             <Link to={"/cart"} type="button" className="btn btn-outline-dark">
-              Cart
+              Adopt
             </Link>
           </div>
         </div>

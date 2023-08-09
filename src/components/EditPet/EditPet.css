@@ -1,8 +1,12 @@
-.edit-label {
+.edit-pet label {
   color: black;
   font-size: large;
 }
 
-.edit-input {
+.edit-pet input {
   display: block;
+}
+
+.edit-pet input:checked ~ label {
+  color: black;
 }
