@@ -41,9 +41,12 @@ function AddPet() {
       const speciesValue =
         petData.species === "other" ? otherSpecies : petData.species;
 
-      await axios.post(`${url}/pets`, { ...petData, species: speciesValue });
+      const result = await axios.post(`${url}/pets`, {
+        ...petData,
+        species: speciesValue,
+      });
       alert("New pet added!");
-      navigate("/pets");
+      navigate(`/pets/${result.data.id}`);
     } catch (error) {
       console.log(error);
       console.log(error.response.data.error);
