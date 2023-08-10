@@ -257,6 +257,18 @@ function EditPet() {
               </label>
             </div>
           </div>
+          <div className="col-md-12">
+            <label>Photo:</label>
+            <input
+              className="form-control"
+              type="text"
+              name="photo"
+              value={pet.photo}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
           <div className="col-12">
             <button type="submit" className="btn btn-outline-dark">
               Submit
