@@ -84,7 +84,8 @@ function Pet() {
 
   return (
     <div className="pet">
-      <div className="next-pet">
+      <div className="page-footer  btns pt-5"></div>
+      {/* <div className="next-pet">
         <Link>
           <button className="btn btn-light">
             <span className="next-pet-text">Next Pet</span>
@@ -98,7 +99,7 @@ function Pet() {
             </svg>
           </button>
         </Link>
-      </div>
+      </div> */}
 
       <div className="container">
         <div className="row g-0  position-relative">
