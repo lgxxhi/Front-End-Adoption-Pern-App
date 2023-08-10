@@ -13,6 +13,7 @@ function Pet() {
   const { id } = useParams();
   useEffect(() => {
     fetchPetById();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function fetchPetById() {
