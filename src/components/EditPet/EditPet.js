@@ -10,42 +10,52 @@ function EditPet() {
   const { id } = useParams();
 
   const [pet, setPet] = useState({
-    age: 0,
-    breed: "",
-    color: "",
-    gender: "",
-    is_favorite: false,
-    location: "",
     name: "",
-    photo: "",
+    age: 0,
+    species: "",
+    breed: "",
+    gender: "",
+    location: "",
+    color: "",
     size: "",
     story: "",
+    is_favorite: false,
+    photo: "",
   });
 
-  const [otherSpecies, setOtherSpecies] = useState("");
+  const [storedSpecies, setStoredSpecies] = useState("");
+
+  const fetchPet = async () => {
+    try {
+      const response = await axios.get(`${url}/pets/${id}`);
+      setPet(response.data);
+      setStoredSpecies(response.data.species);
+    } catch (error) {
+      navigate("/404");
+    }
+  };
 
   useEffect(() => {
-    const fetchPet = async () => {
-      try {
-        const response = await axios.get(`${url}/pets/${id}`);
-
-        setPet(response.data);
-      } catch (error) {
-        navigate("/404");
-      }
-    };
-
     fetchPet();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
-    if (type === "radio" || name === "species") {
-      setPet({ ...pet, [name]: value });
+    if (name === "species") {
+      if (value !== "cat" && value !== "dog") {
+        setPet({ ...pet, species: "other" });
+      } else {
+        setPet({
+          ...pet,
+          species: value,
+        });
+      }
     } else if (name === "otherSpecies") {
-      setOtherSpecies(value);
+      setPet({
+        ...pet,
+        species: value,
+      });
     } else {
       setPet({
         ...pet,
@@ -57,9 +67,11 @@ function EditPet() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const speciesValue = pet.species === "other" ? otherSpecies : pet.species;
+      const speciesValue =
+        pet.species === "other" ? storedSpecies : pet.species;
 
       await axios.put(`${url}/pets/${id}`, { ...pet, species: speciesValue });
+      alert("Pet successfully updated!");
       navigate(`/pets/${id}`);
     } catch (e) {
       console.log(e);
@@ -114,13 +126,14 @@ function EditPet() {
               <option value="dog">Dog</option>
               <option value="other">Other</option>
             </select>
-            {pet.species === "other" && (
+            {(pet.species === "other" ||
+              !["cat", "dog"].includes(pet.species)) && (
               <input
                 type="text"
                 name="otherSpecies"
                 id="otherSpecies"
                 className="form-control"
-                value={otherSpecies}
+                value={pet.species}
                 onChange={handleChange}
                 placeholder="Enter other species"
                 required
