@@ -23,8 +23,8 @@ function App() {
           <Route path="/add-pet" element={<AddPet />} />
           <Route path="/pets/:id" element={<Pet />} />
           <Route path="/pets/:id/edit" element={<EditPet />} />
-          <Route path="*" element={<Navigate to="/404" />} />
-          <Route path="/404" element={<h1>404 Not found!</h1>} />
+          <Route path="*" element={<h1>404 Not found!</h1>} />
+          {/* <Route path="/404" element={<h1>404 Not found!</h1>} /> */}
         </Routes>
       </Router>
     </div>
