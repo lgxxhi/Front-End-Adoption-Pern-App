@@ -64,7 +64,7 @@ function Pets() {
               <p className="card-text">Age: {pet.age}</p>
               <p className="card-text">Breed: {pet.breed || "N/A"}</p>
               <p className="card-text">Location: {pet.location || "N/A"}</p>
-              <Link to={`/pets/${pet.id}`} class="btn btn-outline-dark">
+              <Link to={`/pets/${pet.id}`} className="btn btn-outline-dark">
                 View Details
               </Link>
             </div>

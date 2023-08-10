@@ -48,3 +48,11 @@ img {
   font-family: "Nunito", sans-serif;
   font-size: xx-large;
 }
+
+.pet i.fas.fa-heart {
+  color: red;
+}
+
+.pet i {
+  cursor: pointer;
+}

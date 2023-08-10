@@ -19,7 +19,6 @@ function Pet() {
   async function fetchPetById() {
     try {
       let result = await axios.get(`${url}/pets/${id}`);
-      console.log(result.data);
 
       setPetState(result.data);
     } catch (error) {
@@ -69,8 +68,22 @@ function Pet() {
     }
   };
 
+  const handleFavorite = async (isFavorite) => {
+    try {
+      const updatedPetData = { ...petState, is_favorite: !isFavorite };
+
+      setPetState(updatedPetData);
+
+      await axios.put(`${url}/pets/${id}`, {
+        ...updatedPetData,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div>
+    <div className="pet">
       <div className="next-pet">
         <Link>
           <button className="btn btn-light">
@@ -183,9 +196,16 @@ function Pet() {
           </div>
         </div>
 
-        <input type="checkbox" id="heart" className="heart-input" />
-        <label htmlFor="heart" className="heart-label ms-auto">
-          <i className="fas fa-heart"></i>
+        <label
+          htmlFor="heart"
+          className="heart-label ms-auto"
+          onClick={() => handleFavorite(petState.is_favorite)}
+        >
+          {petState.is_favorite ? (
+            <i className="fas fa-heart"></i>
+          ) : (
+            <i className="far fa-heart"></i>
+          )}
         </label>
       </div>
     </div>

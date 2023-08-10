@@ -6,3 +6,7 @@
 .add-pet input {
   display: block;
 }
+
+.add-pet input:checked ~ label {
+  color: black;
+}
