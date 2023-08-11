@@ -42,6 +42,11 @@ https://github.com/lgxxhi/Back-End-Adoption-Pern-App
 
 Make sure to clone backend repository and run it on local server 3001, more instructions on Budget App Back read me.
 
+## Additional Links
+
+- **Netlify:** https://main--pern-adoption-site.netlify.app/
+- **Render:** https://adoption-backend.onrender.com/
+
 ## Contributors
 
 **Michael Reyes**
