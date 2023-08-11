@@ -6,16 +6,20 @@ import "./Pets.css";
 function Pets() {
   let url = process.env.REACT_APP_API_URL;
   const { filter } = useParams();
+
   const [petData, setPetData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   async function getPetData() {
     try {
+      setLoading(true);
       let result = await axios.get(`${url}/pets`);
       if (filter === "dogs" || filter === "cats") {
         setPetData(
           result.data.filter((pet) => pet.species === filter.slice(0, -1))
         );
       } else setPetData(result.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -78,13 +82,17 @@ function Pets() {
     <div>
       <div className="page-footer  btns pt-4"></div>
       <div className="container mb-4">
-        <div className="row row-cols-1  row-cols-md-2 row-cols-lg-3 g-4 mt-4">
-          {petData.length === 0 ? (
-            <div>Find some pets that need a home!</div>
-          ) : (
-            mapData()
-          )}
-        </div>
+        {loading ? (
+          <div className="loader">Loading...</div>
+        ) : (
+          <div className="row row-cols-1  row-cols-md-2 row-cols-lg-3 g-4 mt-4">
+            {petData.length === 0 ? (
+              <div>Find some pets that need a home!</div>
+            ) : (
+              mapData()
+            )}
+          </div>
+        )}
       </div>
       <div className=" page-footer  btns pt-4"></div>
     </div>
