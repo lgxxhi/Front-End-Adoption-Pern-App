@@ -40,7 +40,7 @@ To run the app locally follow these steps
 
 https://github.com/lgxxhi/Back-End-Adoption-Pern-App
 
-Make sure to clone backend repository and run it on local server 3001, more instructions on Budget App Back read me.
+Make sure to clone backend repository and run it on local server 3001, more instructions on Adoption App Backend read me.
 
 ## Additional Links
 
